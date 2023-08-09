@@ -18,28 +18,43 @@
 // Você também pode obter uma copia da licença em:                              
 // https://github.com/AutomacaoNet/MotorTributarioNet/blob/master/LICENSE      
 
-using MotorTributarioNet.Facade;
+using System;
 using MotorTributarioNet.Flags;
-using MotorTributarioNet.Impostos.Csts.Base;
+using MotorTributarioNet.Impostos.CalulosDeBC;
+using MotorTributarioNet.Impostos.Implementacoes;
 
-namespace MotorTributarioNet.Impostos.Csts
+namespace MotorTributarioNet.Impostos.Tributacoes
 {
-    public class Cst40 : CstBase
+    public class TributacaoIcmsDesonerado
     {
-        public MotivoDesoneracao MotivoDesoneracao { get; set; }
-        public decimal ValorIcmsDesonerado { get; set; }
-        public TipoCalculoIcmsDesonerado TipoCalculoIcmsDesonerado { get; set; }
+        private readonly ITributavel _tributavel;
+        private readonly CalculaBaseCalculoIcms _calculaBaseCalculoIcms;
+        private readonly TipoCalculoIcmsDesonerado _tipoCalculoIcmsDesonerado;
 
-        public Cst40(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado = TipoCalculoIcmsDesonerado.BaseSimples) : base(origemMercadoria, tipoDesconto)
+        public TributacaoIcmsDesonerado(ITributavel tributavel,TipoDesconto tipoDesconto, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
         {
-            Cst = Cst.Cst40;
-            TipoCalculoIcmsDesonerado = tipoCalculoIcmsDesonerado;
-        }
-        public override void Calcula(ITributavel tributavel)
-        {
-            FacadeCalculadoraTributacao facadeCalculadoraTributacao = new FacadeCalculadoraTributacao(tributavel, TipoDesconto);
-            ValorIcmsDesonerado = facadeCalculadoraTributacao.CalculaIcmsDesonerado().Valor;
+            _tributavel = tributavel ?? throw new ArgumentNullException(nameof(tributavel));
+            _calculaBaseCalculoIcms = new CalculaBaseCalculoIcms(_tributavel, tipoDesconto);
+            _tipoCalculoIcmsDesonerado = tipoCalculoIcmsDesonerado;
         }
 
+        public IResultadoCalculoIcmsDesonerado Calcula()
+        {
+            return CalculaIcmsDesonerado();
+        }
+
+        private IResultadoCalculoIcmsDesonerado CalculaIcmsDesonerado()
+        {
+            var baseCalculo = _calculaBaseCalculoIcms.CalculaBaseCalculo();
+
+            var valorIcmsDesonerado = CalculaIcmsDesonerado(baseCalculo, _tipoCalculoIcmsDesonerado);
+
+            return new ResultadoCalculoIcmsDesonerado(baseCalculo, valorIcmsDesonerado);
+        }
+
+        private decimal CalculaIcmsDesonerado(decimal baseCalculo, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
+        {
+            return baseCalculo * _tributavel.PercentualIcms / 100;
+        }
     }
 }

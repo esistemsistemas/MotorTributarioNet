@@ -28,6 +28,22 @@ namespace TestCalculosTributarios
             Assert.Equal(2.07m, resultado.Fcp);
         }
 
+        [Fact]
+        public void Testa_ICSM_Desonerado()
+        {
+            var produto = new Produto
+            {
+                QuantidadeProduto = 1,
+                ValorProduto = 15.99m,
+                PercentualIcms = 12,
+                Cst = MotorTributarioNet.Flags.Cst.Cst40
+            };
+
+            var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica);
+            var resultado = tributacao.Calcular();
+            Assert.Equal(2.07m, resultado.Fcp);
+        }
+
         private static Produto CriaObjetoProduto()
         {
             var produto = new Produto();
