@@ -34,7 +34,6 @@ namespace MotorTributarioNet.Impostos.Tributacoes
         public TributacaoIcmsDesonerado(ITributavel tributavel,TipoDesconto tipoDesconto, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
         {
             _tributavel = tributavel ?? throw new ArgumentNullException(nameof(tributavel));
-            _calculaBaseCalculoIcms = new CalculaBaseCalculoIcms(_tributavel, tipoDesconto);
             _tipoCalculoIcmsDesonerado = tipoCalculoIcmsDesonerado;
         }
 
@@ -45,16 +44,24 @@ namespace MotorTributarioNet.Impostos.Tributacoes
 
         private IResultadoCalculoIcmsDesonerado CalculaIcmsDesonerado()
         {
-            var baseCalculo = _calculaBaseCalculoIcms.CalculaBaseCalculo();
+            decimal subtotalProduto = _tributavel.ValorProduto * _tributavel.QuantidadeProduto;
 
-            var valorIcmsDesonerado = CalculaIcmsDesonerado(baseCalculo, _tipoCalculoIcmsDesonerado);
+            var valorIcmsDesonerado = CalculaIcmsDesonerado(subtotalProduto, _tipoCalculoIcmsDesonerado);
 
-            return new ResultadoCalculoIcmsDesonerado(baseCalculo, valorIcmsDesonerado);
+            return new ResultadoCalculoIcmsDesonerado(subtotalProduto, valorIcmsDesonerado);
         }
 
-        private decimal CalculaIcmsDesonerado(decimal baseCalculo, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
+        private decimal CalculaIcmsDesonerado(decimal subtotalProduto, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
         {
-            return baseCalculo * _tributavel.PercentualIcms / 100;
+            decimal aliquota = _tributavel.PercentualIcms / 100;
+            if (tipoCalculoIcmsDesonerado == TipoCalculoIcmsDesonerado.BaseSimples)
+            {
+                return subtotalProduto * aliquota;
+            }
+            else //base por dentro: ICMS Desonerado = (Preço na Nota Fiscal / (1 - Alíquota)) * Alíquota
+            {
+                return (subtotalProduto / (1 - aliquota)) * aliquota;
+            }
         }
     }
 }

@@ -28,8 +28,41 @@ namespace TestCalculosTributarios
             Assert.Equal(2.07m, resultado.Fcp);
         }
 
+        //[Fact]
+        //public void Testa_ICSM_Desonerado_Base_Simples_Cst_20()
+        //{
+        //    var produto = new Produto
+        //    {
+        //        QuantidadeProduto = 1,
+        //        ValorProduto = 15.99m,
+        //        PercentualIcms = 12,
+        //        PercentualReducao = 41.67m,
+        //        Cst = MotorTributarioNet.Flags.Cst.Cst40
+        //    };
+
+        //    var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
+        //    var resultado = tributacao.Calcular();
+        //    Assert.Equal(0.20m, resultado.ValorIcmsDesonerado);
+        //}
+
+        //[Fact]
+        //public void Testa_ICSM_Desonerado_Base_Simples_Cst_30()
+        //{
+        //    var produto = new Produto
+        //    {
+        //        QuantidadeProduto = 1,
+        //        ValorProduto = 15.99m,
+        //        PercentualIcms = 12,
+        //        Cst = MotorTributarioNet.Flags.Cst.Cst20
+        //    };
+
+        //    var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
+        //    var resultado = tributacao.Calcular();
+        //    Assert.Equal(1.9188m, resultado.ValorIcmsDesonerado);
+        //}
+
         [Fact]
-        public void Testa_ICSM_Desonerado()
+        public void Testa_ICSM_Desonerado_Base_Simples_Cst_40()
         {
             var produto = new Produto
             {
@@ -39,10 +72,93 @@ namespace TestCalculosTributarios
                 Cst = MotorTributarioNet.Flags.Cst.Cst40
             };
 
-            var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica);
+            var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
             var resultado = tributacao.Calcular();
-            Assert.Equal(2.07m, resultado.Fcp);
+            Assert.Equal(1.9188m, resultado.ValorIcmsDesonerado);
         }
+
+        //[Fact]
+        //public void Testa_ICSM_Desonerado_Base_Simples_Cst_70()
+        //{
+        //    var produto = new Produto
+        //    {
+        //        QuantidadeProduto = 1,
+        //        ValorProduto = 15.99m,
+        //        PercentualIcms = 12,
+        //        PercentualReducao = 41.67m,
+        //        Cst = MotorTributarioNet.Flags.Cst.Cst40
+        //    };
+
+        //    var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
+        //    var resultado = tributacao.Calcular();
+        //    Assert.Equal(0.20m, resultado.ValorIcmsDesonerado);
+        //}
+
+        //[Fact]
+        //public void Testa_ICSM_Desonerado_Base_Por_Dentro_Cst_20()
+        //{
+        //    var produto = new Produto
+        //    {
+        //        QuantidadeProduto = 1,
+        //        ValorProduto = 15.99m,
+        //        PercentualIcms = 12,
+        //        PercentualReducao = 41.67m,
+        //        Cst = MotorTributarioNet.Flags.Cst.Cst40
+        //    };
+
+        //    var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
+        //    var resultado = tributacao.Calcular();
+        //    Assert.Equal(0.20m, resultado.ValorIcmsDesonerado);
+        //}
+
+        //[Fact]
+        //public void Testa_ICSM_Desonerado_Base_Por_Dentro_Cst_30()
+        //{
+        //    var produto = new Produto
+        //    {
+        //        QuantidadeProduto = 1,
+        //        ValorProduto = 15.99m,
+        //        PercentualIcms = 12,
+        //        Cst = MotorTributarioNet.Flags.Cst.Cst20
+        //    };
+
+        //    var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
+        //    var resultado = tributacao.Calcular();
+        //    Assert.Equal(1.9188m, resultado.ValorIcmsDesonerado);
+        //}
+
+        [Fact]
+        public void Testa_ICSM_Desonerado_Base_Por_Dentro_Cst_40()
+        {
+            var produto = new Produto
+            {
+                QuantidadeProduto = 1,
+                ValorProduto = 200m,
+                PercentualIcms = 20,
+                Cst = MotorTributarioNet.Flags.Cst.Cst40
+            };
+
+            var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BasePorDentro);
+            var resultado = tributacao.Calcular();
+            Assert.Equal(50m, resultado.ValorIcmsDesonerado);
+        }
+
+        //[Fact]
+        //public void Testa_ICSM_Desonerado_Base_Por_Dentro_Cst_70()
+        //{
+        //    var produto = new Produto
+        //    {
+        //        QuantidadeProduto = 1,
+        //        ValorProduto = 15.99m,
+        //        PercentualIcms = 12,
+        //        PercentualReducao = 41.67m,
+        //        Cst = MotorTributarioNet.Flags.Cst.Cst40
+        //    };
+
+        //    var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
+        //    var resultado = tributacao.Calcular();
+        //    Assert.Equal(0.20m, resultado.ValorIcmsDesonerado);
+        //}
 
         private static Produto CriaObjetoProduto()
         {

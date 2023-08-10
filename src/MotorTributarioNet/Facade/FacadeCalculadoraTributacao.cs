@@ -31,10 +31,11 @@ namespace MotorTributarioNet.Facade
         private readonly TipoDesconto _tipoDesconto;
         private readonly TipoCalculoIcmsDesonerado _tipoCalculoIcmsDesonerado;
 
-        public FacadeCalculadoraTributacao(ITributavel tributavel, TipoDesconto tipoDesconto = TipoDesconto.Incondicional)
+        public FacadeCalculadoraTributacao(ITributavel tributavel, TipoDesconto tipoDesconto = TipoDesconto.Incondicional, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado = TipoCalculoIcmsDesonerado.BaseSimples)
         {
             _tributavel = tributavel;
             _tipoDesconto = tipoDesconto;
+            _tipoCalculoIcmsDesonerado = tipoCalculoIcmsDesonerado;
         }
 
         public IResultadoCalculoIcms CalculaIcms()

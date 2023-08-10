@@ -47,6 +47,7 @@ namespace MotorTributarioNet.Impostos
         private TributacaoIssqn Issqn { get; set; }
         private TributacaoIbpt Ibpt { get; set; }
         private TributacaoFcpStRetido TributacaoFcpStRetido { get; set; }
+        private TipoCalculoIcmsDesonerado TipoCalculoIcmsDesonerado { get; set; }
 
         #endregion
 
@@ -107,13 +108,14 @@ namespace MotorTributarioNet.Impostos
         #endregion
 
         private readonly ITributavelProduto _produto;
-        public ResultadoTributacao(ITributavelProduto produto, Crt crtEmpresa, TipoOperacao operacao, TipoPessoa tipoPessoa, TipoDesconto tipoDesconto = TipoDesconto.Incondicional)
+        public ResultadoTributacao(ITributavelProduto produto, Crt crtEmpresa, TipoOperacao operacao, TipoPessoa tipoPessoa, TipoDesconto tipoDesconto = TipoDesconto.Incondicional, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado = TipoCalculoIcmsDesonerado.BaseSimples)
         {
             _produto = produto;
             CrtEmpresa = crtEmpresa;
             Operacao = operacao;
             TipoPessoa = tipoPessoa;
             TipoDesconto = tipoDesconto;
+            TipoCalculoIcmsDesonerado = tipoCalculoIcmsDesonerado;
         }
 
         public ResultadoTributacao Calcular()
@@ -180,7 +182,7 @@ namespace MotorTributarioNet.Impostos
                         ValorIcmsSt = ((Cst30)Icms).ValorIcmsSt;
                         break;
                     case Cst.Cst40:
-                        Icms = new Cst40();
+                        Icms = new Cst40(tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado);
                         Icms.Calcula(_produto);
                         ValorIcmsDesonerado = ((Cst40)Icms).ValorIcmsDesonerado;
                         break;
