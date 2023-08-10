@@ -22,6 +22,7 @@ using System;
 using MotorTributarioNet.Flags;
 using MotorTributarioNet.Impostos.CalulosDeBC;
 using MotorTributarioNet.Impostos.Implementacoes;
+using static System.Collections.Specialized.BitVector32;
 
 namespace MotorTributarioNet.Impostos.Tributacoes
 {
@@ -34,6 +35,7 @@ namespace MotorTributarioNet.Impostos.Tributacoes
         public TributacaoIcmsDesonerado(ITributavel tributavel,TipoDesconto tipoDesconto, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
         {
             _tributavel = tributavel ?? throw new ArgumentNullException(nameof(tributavel));
+            _calculaBaseCalculoIcms = new CalculaBaseCalculoIcms(_tributavel, tipoDesconto);
             _tipoCalculoIcmsDesonerado = tipoCalculoIcmsDesonerado;
         }
 
@@ -45,23 +47,33 @@ namespace MotorTributarioNet.Impostos.Tributacoes
         private IResultadoCalculoIcmsDesonerado CalculaIcmsDesonerado()
         {
             decimal subtotalProduto = _tributavel.ValorProduto * _tributavel.QuantidadeProduto;
+            decimal baseCalculo = _calculaBaseCalculoIcms.CalculaBaseCalculo();
 
-            var valorIcmsDesonerado = CalculaIcmsDesonerado(subtotalProduto, _tipoCalculoIcmsDesonerado);
+            var valorIcmsDesonerado = CalculaIcmsDesonerado(_tipoCalculoIcmsDesonerado == TipoCalculoIcmsDesonerado.BaseSimples ? baseCalculo : subtotalProduto, _tipoCalculoIcmsDesonerado);
 
             return new ResultadoCalculoIcmsDesonerado(subtotalProduto, valorIcmsDesonerado);
         }
 
-        private decimal CalculaIcmsDesonerado(decimal subtotalProduto, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
+        private decimal CalculaIcmsDesonerado(decimal valorBase, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
         {
             decimal aliquota = _tributavel.PercentualIcms / 100;
+
             if (tipoCalculoIcmsDesonerado == TipoCalculoIcmsDesonerado.BaseSimples)
             {
-                return subtotalProduto * aliquota;
+                return valorBase * aliquota;
             }
-            else //base por dentro: ICMS Desonerado = (Preço na Nota Fiscal / (1 - Alíquota)) * Alíquota
+            else 
             {
-                return (subtotalProduto / (1 - aliquota)) * aliquota;
+                if(_tributavel.Cst == Cst.Cst20 || _tributavel.Cst == Cst.Cst70) //base por dentro 20 ou 70: ICMS Desonerado = Preço na Nota Fiscal * (1 - (Alíquota * (1 - Percentual de redução da BC))) / (1 - Alíquota) - Preço na Nota Fiscal
+                {
+                    return ((valorBase * (1 - (aliquota * (1 - (_tributavel.PercentualReducao / 100)))) / (1 - aliquota)) - valorBase);;
+                }
+                else if(_tributavel.Cst == Cst.Cst30 || _tributavel.Cst == Cst.Cst40) //base por dentro 30 ou 40: ICMS Desonerado = (Preço na Nota Fiscal / (1 - Alíquota)) * Alíquota
+                {
+                    return (valorBase / (1 - aliquota)) * aliquota;
+                }
             }
+            return 0m;
         }
     }
 }

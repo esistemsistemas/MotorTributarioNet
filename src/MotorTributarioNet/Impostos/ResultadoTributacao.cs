@@ -165,21 +165,23 @@ namespace MotorTributarioNet.Impostos
                         ValorIcmsSt = ((Cst10)Icms).ValorIcmsSt;
                         break;
                     case Cst.Cst20:
-                        Icms = new Cst20();
+                        Icms = new Cst20(tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado);
                         Icms.Calcula(_produto);
                         ValorBcIcms = ((Cst20)Icms).ValorBcIcms;
                         PercentualIcms = ((Cst20)Icms).PercentualIcms;
                         ValorIcms = ((Cst20)Icms).ValorIcms;
                         PercentualReducao = ((Cst20)Icms).PercentualReducao;
+                        ValorIcmsDesonerado = ((Cst20)Icms).ValorIcmsDesonerado;
                         break;
                     case Cst.Cst30:
-                        Icms = new Cst30();
+                        Icms = new Cst30(tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado);
                         Icms.Calcula(_produto);
                         PercentualMva = ((Cst30)Icms).PercentualMva;
                         PercentualReducaoSt = ((Cst30)Icms).PercentualReducaoSt;
                         ValorBcIcmsSt = ((Cst30)Icms).ValorBcIcmsSt;
                         PercentualIcmsSt = ((Cst30)Icms).PercentualIcmsSt;
                         ValorIcmsSt = ((Cst30)Icms).ValorIcmsSt;
+                        ValorIcmsDesonerado = ((Cst30)Icms).ValorIcmsDesonerado;
                         break;
                     case Cst.Cst40:
                         Icms = new Cst40(tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado);
@@ -213,9 +215,10 @@ namespace MotorTributarioNet.Impostos
                         ValorBcStRetido = ((Cst60)Icms).ValorBcStRetido;
                         break;
                     case Cst.Cst70:
-                        Icms = new Cst70();
+                        Icms = new Cst70(tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado);
                         Icms.Calcula(_produto);
                         PercentualReducao = ((Cst70)Icms).PercentualReducao;
+                        ValorIcmsDesonerado = ((Cst70)Icms).ValorIcmsDesonerado;
                         break;
                     case Cst.Cst90:
                         Icms = new Cst90();
