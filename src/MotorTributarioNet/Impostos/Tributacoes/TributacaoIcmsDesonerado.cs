@@ -30,9 +30,9 @@ namespace MotorTributarioNet.Impostos.Tributacoes
     {
         private readonly ITributavel _tributavel;
         private readonly CalculaBaseCalculoIcms _calculaBaseCalculoIcms;
-        private readonly TipoCalculoIcmsDesonerado _tipoCalculoIcmsDesonerado;
+        private readonly TipoCalculoIcmsDesonerado? _tipoCalculoIcmsDesonerado;
 
-        public TributacaoIcmsDesonerado(ITributavel tributavel,TipoDesconto tipoDesconto, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
+        public TributacaoIcmsDesonerado(ITributavel tributavel,TipoDesconto tipoDesconto, TipoCalculoIcmsDesonerado? tipoCalculoIcmsDesonerado)
         {
             _tributavel = tributavel ?? throw new ArgumentNullException(nameof(tributavel));
             _calculaBaseCalculoIcms = new CalculaBaseCalculoIcms(_tributavel, tipoDesconto);
@@ -54,7 +54,7 @@ namespace MotorTributarioNet.Impostos.Tributacoes
             return new ResultadoCalculoIcmsDesonerado(subtotalProduto, valorIcmsDesonerado);
         }
 
-        private decimal CalculaIcmsDesonerado(decimal valorBase, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado)
+        private decimal CalculaIcmsDesonerado(decimal valorBase, TipoCalculoIcmsDesonerado? tipoCalculoIcmsDesonerado)
         {
             decimal aliquota = _tributavel.PercentualIcms / 100;
 
@@ -62,7 +62,7 @@ namespace MotorTributarioNet.Impostos.Tributacoes
             {
                 return valorBase * aliquota;
             }
-            else 
+            else if(tipoCalculoIcmsDesonerado == TipoCalculoIcmsDesonerado.BasePorDentro)
             {
                 if(_tributavel.Cst == Cst.Cst20 || _tributavel.Cst == Cst.Cst70) //base por dentro 20 ou 70: ICMS Desonerado = Preço na Nota Fiscal * (1 - (Alíquota * (1 - Percentual de redução da BC))) / (1 - Alíquota) - Preço na Nota Fiscal
                 {

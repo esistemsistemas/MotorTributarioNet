@@ -29,9 +29,9 @@ namespace MotorTributarioNet.Facade
     {
         private readonly ITributavel _tributavel;
         private readonly TipoDesconto _tipoDesconto;
-        private readonly TipoCalculoIcmsDesonerado _tipoCalculoIcmsDesonerado;
+        private readonly TipoCalculoIcmsDesonerado? _tipoCalculoIcmsDesonerado;
 
-        public FacadeCalculadoraTributacao(ITributavel tributavel, TipoDesconto tipoDesconto = TipoDesconto.Incondicional, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado = TipoCalculoIcmsDesonerado.BaseSimples)
+        public FacadeCalculadoraTributacao(ITributavel tributavel, TipoDesconto tipoDesconto = TipoDesconto.Incondicional, TipoCalculoIcmsDesonerado? tipoCalculoIcmsDesonerado = null)
         {
             _tributavel = tributavel;
             _tipoDesconto = tipoDesconto;

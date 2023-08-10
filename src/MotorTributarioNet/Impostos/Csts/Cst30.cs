@@ -37,9 +37,9 @@ namespace MotorTributarioNet.Impostos.Csts
 		public decimal PercentualFcpSt { get; private set; }
 		public decimal ValorFcpSt { get; private set; }
         public decimal ValorIcmsDesonerado { get; private set; }
-        public TipoCalculoIcmsDesonerado TipoCalculoIcmsDesonerado { get; private set; }
+        public TipoCalculoIcmsDesonerado? TipoCalculoIcmsDesonerado { get; private set; }
 
-        public Cst30(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional, TipoCalculoIcmsDesonerado tipoCalculoIcmsDesonerado = TipoCalculoIcmsDesonerado.BaseSimples) : base(origemMercadoria, tipoDesconto)
+        public Cst30(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional, TipoCalculoIcmsDesonerado? tipoCalculoIcmsDesonerado = null) : base(origemMercadoria, tipoDesconto)
         {
             Cst = Cst.Cst30;
             TipoCalculoIcmsDesonerado = tipoCalculoIcmsDesonerado;
