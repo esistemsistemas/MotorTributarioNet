@@ -189,8 +189,8 @@ namespace MotorTributarioNet.Impostos
                         ValorIcmsDesonerado = ((Cst40)Icms).ValorIcmsDesonerado;
                         break;
                     case Cst.Cst41:
-                        Icms = new Cst41();
-                        Icms.Calcula(_produto);
+                        //40 Não Tributada - Classificam-se neste código as operações não tributadas no ICMS pelo Regime Normal.
+                        //Não existe Cálculo ICMS
                         break;
                     case Cst.Cst50:
                         Icms = new Cst50();
