@@ -38,7 +38,9 @@ namespace MotorTributarioNet.Impostos.Csts
         public override void Calcula(ITributavel tributavel)
         {
             FacadeCalculadoraTributacao facadeCalculadoraTributacao = new FacadeCalculadoraTributacao(tributavel, TipoDesconto);
-            ValorIcmsMonofasicoProprio = facadeCalculadoraTributacao.CalculaIcmsMonofasico().Valor;
+            IResultadoCalculoIcmsMonofasico resultadoCalculoIcms = facadeCalculadoraTributacao.CalculaIcmsMonofasico();
+            ValorIcmsMonofasicoProprio = resultadoCalculoIcms.ValorIcmsMonofasicoProprio;
+
         }
 
     }

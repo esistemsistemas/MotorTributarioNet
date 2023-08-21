@@ -106,7 +106,9 @@ namespace MotorTributarioNet.Impostos
         public decimal ValorBcFcpStRetido { get; private set; }
         public decimal FcpStRetido { get; private set; }
 
+        public decimal QuantidadeBaseCalculoIcmsMonofasico { get; private set; }
         public decimal ValorIcmsMonofasicoProprio { get; private set; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; private set; }
         public decimal ValorIcmsMonofasicoRetencao { get; private set; }
         public decimal ValorIcmsMonofasicoOperacao { get; private set; }
         public decimal ValorIcmsMonofasicoDiferido { get; private set; }
@@ -174,6 +176,14 @@ namespace MotorTributarioNet.Impostos
                         ValorBcIcmsSt = ((Cst10)Icms).ValorBcIcmsSt;
                         PercentualIcmsSt = ((Cst10)Icms).PercentualIcmsSt;
                         ValorIcmsSt = ((Cst10)Icms).ValorIcmsSt;
+                        break;
+                    case Cst.Cst15:
+                        Icms = new Cst15();
+                        Icms.Calcula(_produto);
+                        ValorIcmsMonofasicoProprio = ((Cst15)Icms).ValorIcmsMonofasicoProprio;
+                        ValorIcmsMonofasicoRetencao = ((Cst15)Icms).ValorIcmsMonofasicoRetencao;
+                        QuantidadeBaseCalculoIcmsMonofasico = ((Cst15)Icms).QuantidadeBaseCalculoIcmsMonofasico;
+                        QuantidadeBaseCalculoIcmsMonofasicoRetencao = ((Cst15)Icms).QuantidadeBaseCalculoIcmsMonofasicoRetencao;
                         break;
                     case Cst.Cst20:
                         Icms = new Cst20(tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado);

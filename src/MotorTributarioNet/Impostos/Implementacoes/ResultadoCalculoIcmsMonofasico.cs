@@ -22,11 +22,18 @@ namespace MotorTributarioNet.Impostos.Implementacoes
 {
     public class ResultadoCalculoIcmsMonofasico : IResultadoCalculoIcmsMonofasico
     {
-        public ResultadoCalculoIcmsMonofasico(decimal valor)
+        public ResultadoCalculoIcmsMonofasico(decimal quantidadeBaseCalculoIcmsMonofasico, decimal valorIcmsMonofasicoProprio, decimal quantidadeBaseCalculoIcmsMonofasicoRetencao, decimal valorIcmsMonofasicoRetencao)
         {
-            Valor = valor;
+            QuantidadeBaseCalculoIcmsMonofasico = quantidadeBaseCalculoIcmsMonofasico;
+            ValorIcmsMonofasicoProprio = valorIcmsMonofasicoProprio;
+            QuantidadeBaseCalculoIcmsMonofasicoRetencao = quantidadeBaseCalculoIcmsMonofasicoRetencao;
+            ValorIcmsMonofasicoRetencao = valorIcmsMonofasicoRetencao;
+
         }
 
-        public decimal Valor { get; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasico { get; }
+        public decimal ValorIcmsMonofasicoProprio { get; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; }
+        public decimal ValorIcmsMonofasicoRetencao { get; }
     }
 }

@@ -173,17 +173,37 @@ namespace TestCalculosTributarios
         {
             var produto = new Produto
             {
-                QuantidadeBaseCalculoIcmsMonofasico = 470.03m,
-                AliquotaAdRemIcms = 1.2571m,
+                QuantidadeBaseCalculoIcmsMonofasico = 12m,
+                AliquotaAdRemIcms = 0.9456m,
                 Cst = MotorTributarioNet.Flags.Cst.Cst02
             };
 
             var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica);
             var resultado = tributacao.Calcular();
             decimal valorArredondado = resultado.ValorIcmsMonofasicoProprio.Arredondar();
-            Assert.Equal(590.87m, valorArredondado);
+            Assert.Equal(11.35m, valorArredondado);
         }
 
+        [Fact]
+        public void Testa_ICSM_Monofasico_Cst_15()
+        {
+            var produto = new Produto
+            {
+                QuantidadeBaseCalculoIcmsMonofasico = 14.04m,
+                PercentualReducaoAliquotaAdRemIcms = 13.41m,
+                PercentualBiodisel = 20m,
+                AliquotaAdRemIcms = 0.9456m,
+                PercentualOriginarioUf = 26.0420m,
+                Cst = MotorTributarioNet.Flags.Cst.Cst15
+            };
+
+            var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica);
+            var resultado = tributacao.Calcular();
+            decimal valorArredondado = resultado.ValorIcmsMonofasicoRetencao.Arredondar();
+            decimal valorMonofasicoArredondado = resultado.ValorIcmsMonofasicoProprio.Arredondar();
+            Assert.Equal(0.69m, valorArredondado);
+            Assert.Equal(9.20m, valorMonofasicoArredondado);
+        }
 
         private static Produto CriaObjetoProduto()
         {

@@ -18,13 +18,35 @@
 // Você também pode obter uma copia da licença em:                              
 // https://github.com/AutomacaoNet/MotorTributarioNet/blob/master/LICENSE      
 
-namespace MotorTributarioNet.Impostos
+using MotorTributarioNet.Facade;
+using MotorTributarioNet.Flags;
+using MotorTributarioNet.Impostos.Csts.Base;
+
+namespace MotorTributarioNet.Impostos.Csts
 {
-    public interface IResultadoCalculoIcmsMonofasico
+    public class Cst15 : CstBase
     {
-        decimal QuantidadeBaseCalculoIcmsMonofasico { get; }
-        decimal ValorIcmsMonofasicoProprio { get; }
-        decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; }
-        decimal ValorIcmsMonofasicoRetencao { get; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasico { get; private set; }
+        public decimal ValorIcmsMonofasicoProprio { get; private set; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; private set; }
+        public decimal ValorIcmsMonofasicoRetencao { get; private set; }
+        
+
+        public Cst15(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional) : base(origemMercadoria, tipoDesconto)
+        {
+            Cst = Cst.Cst02;
+        }
+
+        public override void Calcula(ITributavel tributavel)
+        {
+            FacadeCalculadoraTributacao facadeCalculadoraTributacao = new FacadeCalculadoraTributacao(tributavel, TipoDesconto);
+            IResultadoCalculoIcmsMonofasico resultadoCalculoIcmsMonofasico = facadeCalculadoraTributacao.CalculaIcmsMonofasico();
+
+            QuantidadeBaseCalculoIcmsMonofasico = resultadoCalculoIcmsMonofasico.QuantidadeBaseCalculoIcmsMonofasico;
+            ValorIcmsMonofasicoProprio = resultadoCalculoIcmsMonofasico.ValorIcmsMonofasicoProprio;
+            QuantidadeBaseCalculoIcmsMonofasicoRetencao = resultadoCalculoIcmsMonofasico.QuantidadeBaseCalculoIcmsMonofasicoRetencao;
+            ValorIcmsMonofasicoRetencao = resultadoCalculoIcmsMonofasico.ValorIcmsMonofasicoRetencao;
+        }
+
     }
 }
