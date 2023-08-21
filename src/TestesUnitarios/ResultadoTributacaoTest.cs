@@ -168,6 +168,23 @@ namespace TestCalculosTributarios
             Assert.Equal(0.20m, valorArredondado);
         }
 
+        [Fact]
+        public void Testa_ICSM_Monofasico_Cst_02()
+        {
+            var produto = new Produto
+            {
+                QuantidadeBaseCalculoIcmsMonofasico = 470.03m,
+                AliquotaAdRemIcms = 1.2571m,
+                Cst = MotorTributarioNet.Flags.Cst.Cst02
+            };
+
+            var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica);
+            var resultado = tributacao.Calcular();
+            decimal valorArredondado = resultado.ValorIcmsMonofasicoProprio.Arredondar();
+            Assert.Equal(590.87m, valorArredondado);
+        }
+
+
         private static Produto CriaObjetoProduto()
         {
             var produto = new Produto();

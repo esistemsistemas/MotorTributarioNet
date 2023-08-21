@@ -18,41 +18,34 @@
 // Você também pode obter uma copia da licença em:                              
 // https://github.com/AutomacaoNet/MotorTributarioNet/blob/master/LICENSE      
 
-using System.ComponentModel;
+using System;
+using MotorTributarioNet.Flags;
+using MotorTributarioNet.Impostos.CalulosDeBC;
+using MotorTributarioNet.Impostos.Implementacoes;
+using static System.Collections.Specialized.BitVector32;
 
-namespace MotorTributarioNet.Flags
+namespace MotorTributarioNet.Impostos.Tributacoes
 {
-    public enum Cst
+    public class TributacaoIcmsMonofasico
     {
-        [Description("00 - Tributada integralmente")]
-        Cst00 = 00,
-        [Description("02 - Tributação monofásica própria sobre combustíveis")]
-        Cst02 = 02,
-        [Description("10 - Tributada e com cobrança do ICMS por substituição tributária")]
-        Cst10 = 10,
-        [Description("15 - Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis")]
-        Cst15 = 15,
-        [Description("20 - Com redução de Base de Cálculo")]
-        Cst20 = 20,
-        [Description("30 - Isenta ou não tributada e com cobrança do ICMS por substituição tributária")]
-        Cst30 = 30,
-        [Description("40 - Isenta")]
-        Cst40 = 40,
-        [Description("41 - Não tributada")]
-        Cst41 = 41,
-        [Description("50 - Com suspensão")]
-        Cst50 = 50,
-        [Description("51 - Com diferimento")]
-        Cst51 = 51,
-        [Description("53 - Tributação monofásica sobre combustíveis com recolhimento diferido")]
-        Cst53 = 53,
-        [Description("60 - ICMS cobrado anteriormente por substituição tributária")]
-        Cst60 = 60,
-        [Description("61 - Tributação monofásica sobre combustíveis cobrada anteriormente")]
-        Cst61 = 61,
-        [Description("70 - Com redução da Base de Cálculo e cobrança do ICMS por substituição tributária")]
-        Cst70 = 70,
-        [Description("90 - Outras")]
-        Cst90 = 90
+        private readonly ITributavel _tributavel;
+
+        public TributacaoIcmsMonofasico(ITributavel tributavel,TipoDesconto tipoDesconto)
+        {
+            _tributavel = tributavel ?? throw new ArgumentNullException(nameof(tributavel));
+        }
+
+        public IResultadoCalculoIcmsMonofasico Calcula()
+        {
+            return CalculaIcmsMonofasico();
+        }
+
+        private IResultadoCalculoIcmsMonofasico CalculaIcmsMonofasico()
+        {
+            decimal valorIcmsMonofasico = _tributavel.QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms;
+
+            return new ResultadoCalculoIcmsMonofasico(valorIcmsMonofasico);
+        }
+
     }
 }

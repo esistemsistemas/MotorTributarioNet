@@ -52,5 +52,15 @@ namespace TestCalculosTributarios.Entidade
         public bool DeduzIcmsDaBaseDePisCofins { get; set; } = false;
         public decimal PercentualReducaoPis { get; set; }
         public decimal PercentualReducaoCofins { get; set; }
+        public decimal PercentualBiodisel { get; set; }
+        public decimal PercentualOriginarioUf { get; set; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasico { get; set; }
+        public decimal AliquotaAdRemIcms { get; set; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; set; }
+        public decimal AliquotaAdRemIcmsretencao { get; set; }
+        public decimal PercentualReducaoAliquotaAdRemIcms { get; set; }
+        public decimal PercentualIcmsMonofasicoDiferido { get; set; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente { get; set; }
+        public decimal AliquotaAdRemIcmsRetidoAnteriormente { get; set; }
     }
 }

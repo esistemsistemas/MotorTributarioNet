@@ -105,6 +105,12 @@ namespace MotorTributarioNet.Impostos
 
         public decimal ValorBcFcpStRetido { get; private set; }
         public decimal FcpStRetido { get; private set; }
+
+        public decimal ValorIcmsMonofasicoProprio { get; private set; }
+        public decimal ValorIcmsMonofasicoRetencao { get; private set; }
+        public decimal ValorIcmsMonofasicoOperacao { get; private set; }
+        public decimal ValorIcmsMonofasicoDiferido { get; private set; }
+
         #endregion
 
         private readonly ITributavelProduto _produto;
@@ -151,6 +157,11 @@ namespace MotorTributarioNet.Impostos
                         ValorBcIcms = ((Cst00)Icms).ValorBcIcms;
                         PercentualIcms = ((Cst00)Icms).PercentualIcms;
                         ValorIcms = ((Cst00)Icms).ValorIcms;
+                        break;
+                    case Cst.Cst02:
+                        Icms = new Cst02();
+                        Icms.Calcula(_produto);
+                        ValorIcmsMonofasicoProprio = ((Cst02)Icms).ValorIcmsMonofasicoProprio;
                         break;
                     case Cst.Cst10:
                         Icms = new Cst10();
