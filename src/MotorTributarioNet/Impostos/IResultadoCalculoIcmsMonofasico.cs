@@ -26,5 +26,7 @@ namespace MotorTributarioNet.Impostos
         decimal ValorIcmsMonofasicoProprio { get; }
         decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; }
         decimal ValorIcmsMonofasicoRetencao { get; }
+        decimal ValorIcmsMonofasicoOperacao { get; }
+        decimal ValorIcmsMonofasicoDiferido { get; }
     }
 }

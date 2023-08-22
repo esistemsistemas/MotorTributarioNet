@@ -164,6 +164,7 @@ namespace MotorTributarioNet.Impostos
                         Icms = new Cst02();
                         Icms.Calcula(_produto);
                         ValorIcmsMonofasicoProprio = ((Cst02)Icms).ValorIcmsMonofasicoProprio;
+                        QuantidadeBaseCalculoIcmsMonofasico = ((Cst02)Icms).QuantidadeBaseCalculoIcmsMonofasico;
                         break;
                     case Cst.Cst10:
                         Icms = new Cst10();
@@ -228,6 +229,14 @@ namespace MotorTributarioNet.Impostos
                         ValorIcmsDiferido = ((Cst51)Icms).ValorIcmsDiferido;
                         ValorIcmsOperacao = ((Cst51)Icms).ValorIcmsOperacao;
                         PercentualReducao = ((Cst51)Icms).PercentualReducao;
+                        break;
+                    case Cst.Cst53:
+                        Icms = new Cst53();
+                        Icms.Calcula(_produto);
+                        ValorIcmsMonofasicoProprio = ((Cst53)Icms).ValorIcmsMonofasicoProprio;
+                        ValorIcmsMonofasicoOperacao = ((Cst53)Icms).ValorIcmsMonofasicoOperacao;
+                        ValorIcmsMonofasicoDiferido = ((Cst53)Icms).ValorIcmsMonofasicoDiferido;
+                        QuantidadeBaseCalculoIcmsMonofasico = ((Cst53)Icms).QuantidadeBaseCalculoIcmsMonofasico;
                         break;
                     case Cst.Cst60:
                         Icms = new Cst60();

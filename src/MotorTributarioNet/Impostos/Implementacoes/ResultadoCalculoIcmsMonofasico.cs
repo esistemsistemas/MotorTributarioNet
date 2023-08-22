@@ -22,12 +22,14 @@ namespace MotorTributarioNet.Impostos.Implementacoes
 {
     public class ResultadoCalculoIcmsMonofasico : IResultadoCalculoIcmsMonofasico
     {
-        public ResultadoCalculoIcmsMonofasico(decimal quantidadeBaseCalculoIcmsMonofasico, decimal valorIcmsMonofasicoProprio, decimal quantidadeBaseCalculoIcmsMonofasicoRetencao, decimal valorIcmsMonofasicoRetencao)
+        public ResultadoCalculoIcmsMonofasico(decimal quantidadeBaseCalculoIcmsMonofasico, decimal valorIcmsMonofasicoProprio, decimal quantidadeBaseCalculoIcmsMonofasicoRetencao, decimal valorIcmsMonofasicoRetencao, decimal valorIcmsMonofasicoOperacao, decimal valorIcmsMonofasicoDiferido)
         {
             QuantidadeBaseCalculoIcmsMonofasico = quantidadeBaseCalculoIcmsMonofasico;
             ValorIcmsMonofasicoProprio = valorIcmsMonofasicoProprio;
             QuantidadeBaseCalculoIcmsMonofasicoRetencao = quantidadeBaseCalculoIcmsMonofasicoRetencao;
             ValorIcmsMonofasicoRetencao = valorIcmsMonofasicoRetencao;
+            ValorIcmsMonofasicoOperacao = valorIcmsMonofasicoOperacao;
+            ValorIcmsMonofasicoDiferido = valorIcmsMonofasicoDiferido;
 
         }
 
@@ -35,5 +37,7 @@ namespace MotorTributarioNet.Impostos.Implementacoes
         public decimal ValorIcmsMonofasicoProprio { get; }
         public decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; }
         public decimal ValorIcmsMonofasicoRetencao { get; }
+        public decimal ValorIcmsMonofasicoOperacao { get; }
+        public decimal ValorIcmsMonofasicoDiferido { get; }
     }
 }

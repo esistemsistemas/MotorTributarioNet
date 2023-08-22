@@ -31,6 +31,8 @@ namespace MotorTributarioNet.Impostos.Tributacoes
         private decimal ValorIcmsMonofasico;
         private decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao;
         private decimal ValorIcmsMonofasicoRetencao;
+        private decimal ValorIcmsMonofasicoOperacao;
+        private decimal ValorIcmsMonofasicoDiferido;
 
         public TributacaoIcmsMonofasico(ITributavel tributavel,TipoDesconto tipoDesconto)
         {
@@ -46,7 +48,9 @@ namespace MotorTributarioNet.Impostos.Tributacoes
                 case Cst.Cst15:
                     return CalculaIcmsMonofasicoCst15();
                 case Cst.Cst53:
+                    return CalculaIcmsMonofasicoCst53();
                 case Cst.Cst61:
+                    return CalculaIcmsMonofasicoCst61();
                 default:
                     break;
             }
@@ -57,7 +61,7 @@ namespace MotorTributarioNet.Impostos.Tributacoes
         {
             QuantidadeBaseCalculoIcmsMonofasico = _tributavel.QuantidadeBaseCalculoIcmsMonofasico;
             ValorIcmsMonofasico = QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms;
-            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao);
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
         }
         private IResultadoCalculoIcmsMonofasico CalculaIcmsMonofasicoCst15()
         {
@@ -68,9 +72,21 @@ namespace MotorTributarioNet.Impostos.Tributacoes
             QuantidadeBaseCalculoIcmsMonofasicoRetencao = _tributavel.QuantidadeBaseCalculoIcmsMonofasico * (_tributavel.PercentualBiodisel / 100);
             ValorIcmsMonofasicoRetencao = (QuantidadeBaseCalculoIcmsMonofasicoRetencao * _tributavel.AliquotaAdRemIcms) * (_tributavel.PercentualOriginarioUf / 100);
 
-
-            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao);
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
         }
+        private IResultadoCalculoIcmsMonofasico CalculaIcmsMonofasicoCst53()
+        {
+            QuantidadeBaseCalculoIcmsMonofasico = _tributavel.QuantidadeBaseCalculoIcmsMonofasico;
+            ValorIcmsMonofasico = (QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms) - (QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms * (_tributavel.PercentualOriginarioUf / 100));
+            ValorIcmsMonofasicoOperacao = QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms;
+            ValorIcmsMonofasicoDiferido = QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms * (_tributavel.PercentualOriginarioUf / 100);
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
+        }
+        private IResultadoCalculoIcmsMonofasico CalculaIcmsMonofasicoCst61()
+        {
+            
 
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
+        }
     }
 }

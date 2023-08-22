@@ -26,8 +26,7 @@ namespace MotorTributarioNet.Impostos.Csts
 {
     public class Cst02 : CstBase
     {
-        public decimal QuantidadeTributadaIcmsMonofasico { get; private set; }
-        public decimal AliquotaAdRemIcmsMonofasico { get; private set; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasico { get; private set; }
         public decimal ValorIcmsMonofasicoProprio { get; private set; }
 
         public Cst02(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional) : base(origemMercadoria, tipoDesconto)
@@ -40,6 +39,7 @@ namespace MotorTributarioNet.Impostos.Csts
             FacadeCalculadoraTributacao facadeCalculadoraTributacao = new FacadeCalculadoraTributacao(tributavel, TipoDesconto);
             IResultadoCalculoIcmsMonofasico resultadoCalculoIcms = facadeCalculadoraTributacao.CalculaIcmsMonofasico();
             ValorIcmsMonofasicoProprio = resultadoCalculoIcms.ValorIcmsMonofasicoProprio;
+            QuantidadeBaseCalculoIcmsMonofasico = resultadoCalculoIcms.QuantidadeBaseCalculoIcmsMonofasico;
 
         }
 

@@ -24,28 +24,26 @@ using MotorTributarioNet.Impostos.Csts.Base;
 
 namespace MotorTributarioNet.Impostos.Csts
 {
-    public class Cst15 : CstBase
+    public class Cst53 : CstBase
     {
         public decimal QuantidadeBaseCalculoIcmsMonofasico { get; private set; }
         public decimal ValorIcmsMonofasicoProprio { get; private set; }
-        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; private set; }
-        public decimal ValorIcmsMonofasicoRetencao { get; private set; }
-        
+        public decimal ValorIcmsMonofasicoOperacao { get; private set; }
+        public decimal ValorIcmsMonofasicoDiferido { get; private set; }
 
-        public Cst15(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional) : base(origemMercadoria, tipoDesconto)
+        public Cst53(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional) : base(origemMercadoria, tipoDesconto)
         {
-            Cst = Cst.Cst15;
+            Cst = Cst.Cst53;
         }
 
         public override void Calcula(ITributavel tributavel)
         {
             FacadeCalculadoraTributacao facadeCalculadoraTributacao = new FacadeCalculadoraTributacao(tributavel, TipoDesconto);
-            IResultadoCalculoIcmsMonofasico resultadoCalculoIcmsMonofasico = facadeCalculadoraTributacao.CalculaIcmsMonofasico();
-
-            QuantidadeBaseCalculoIcmsMonofasico = resultadoCalculoIcmsMonofasico.QuantidadeBaseCalculoIcmsMonofasico;
-            ValorIcmsMonofasicoProprio = resultadoCalculoIcmsMonofasico.ValorIcmsMonofasicoProprio;
-            QuantidadeBaseCalculoIcmsMonofasicoRetencao = resultadoCalculoIcmsMonofasico.QuantidadeBaseCalculoIcmsMonofasicoRetencao;
-            ValorIcmsMonofasicoRetencao = resultadoCalculoIcmsMonofasico.ValorIcmsMonofasicoRetencao;
+            IResultadoCalculoIcmsMonofasico resultadoCalculoIcms = facadeCalculadoraTributacao.CalculaIcmsMonofasico();
+            ValorIcmsMonofasicoProprio = resultadoCalculoIcms.ValorIcmsMonofasicoProprio;
+            ValorIcmsMonofasicoOperacao = resultadoCalculoIcms.ValorIcmsMonofasicoOperacao;
+            ValorIcmsMonofasicoDiferido = resultadoCalculoIcms.ValorIcmsMonofasicoDiferido;
+            QuantidadeBaseCalculoIcmsMonofasico = resultadoCalculoIcms.QuantidadeBaseCalculoIcmsMonofasico;
         }
 
     }
