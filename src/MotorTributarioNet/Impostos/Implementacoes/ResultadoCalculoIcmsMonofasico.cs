@@ -22,7 +22,14 @@ namespace MotorTributarioNet.Impostos.Implementacoes
 {
     public class ResultadoCalculoIcmsMonofasico : IResultadoCalculoIcmsMonofasico
     {
-        public ResultadoCalculoIcmsMonofasico(decimal quantidadeBaseCalculoIcmsMonofasico, decimal valorIcmsMonofasicoProprio, decimal quantidadeBaseCalculoIcmsMonofasicoRetencao, decimal valorIcmsMonofasicoRetencao, decimal valorIcmsMonofasicoOperacao, decimal valorIcmsMonofasicoDiferido)
+        public ResultadoCalculoIcmsMonofasico(decimal quantidadeBaseCalculoIcmsMonofasico, 
+            decimal valorIcmsMonofasicoProprio, 
+            decimal quantidadeBaseCalculoIcmsMonofasicoRetencao, 
+            decimal valorIcmsMonofasicoRetencao, 
+            decimal valorIcmsMonofasicoOperacao, 
+            decimal valorIcmsMonofasicoDiferido,
+            decimal quantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente,
+            decimal valorIcmsMonofasicoRetidoAnteriormente)
         {
             QuantidadeBaseCalculoIcmsMonofasico = quantidadeBaseCalculoIcmsMonofasico;
             ValorIcmsMonofasicoProprio = valorIcmsMonofasicoProprio;
@@ -30,6 +37,8 @@ namespace MotorTributarioNet.Impostos.Implementacoes
             ValorIcmsMonofasicoRetencao = valorIcmsMonofasicoRetencao;
             ValorIcmsMonofasicoOperacao = valorIcmsMonofasicoOperacao;
             ValorIcmsMonofasicoDiferido = valorIcmsMonofasicoDiferido;
+            QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente = quantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente;
+            ValorIcmsMonofasicoRetidoAnteriormente = valorIcmsMonofasicoRetidoAnteriormente;
 
         }
 
@@ -39,5 +48,7 @@ namespace MotorTributarioNet.Impostos.Implementacoes
         public decimal ValorIcmsMonofasicoRetencao { get; }
         public decimal ValorIcmsMonofasicoOperacao { get; }
         public decimal ValorIcmsMonofasicoDiferido { get; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente { get; }
+        public decimal ValorIcmsMonofasicoRetidoAnteriormente { get; }
     }
 }

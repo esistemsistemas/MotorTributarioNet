@@ -18,17 +18,29 @@
 // Você também pode obter uma copia da licença em:                              
 // https://github.com/AutomacaoNet/MotorTributarioNet/blob/master/LICENSE      
 
-namespace MotorTributarioNet.Impostos
+using MotorTributarioNet.Facade;
+using MotorTributarioNet.Flags;
+using MotorTributarioNet.Impostos.Csts.Base;
+
+namespace MotorTributarioNet.Impostos.Csts
 {
-    public interface IResultadoCalculoIcmsMonofasico
+    public class Cst61 : CstBase
     {
-        decimal QuantidadeBaseCalculoIcmsMonofasico { get; }
-        decimal ValorIcmsMonofasicoProprio { get; }
-        decimal QuantidadeBaseCalculoIcmsMonofasicoRetencao { get; }
-        decimal ValorIcmsMonofasicoRetencao { get; }
-        decimal ValorIcmsMonofasicoOperacao { get; }
-        decimal ValorIcmsMonofasicoDiferido { get; }
-        decimal QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente { get; }
-        decimal ValorIcmsMonofasicoRetidoAnteriormente { get; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente { get; private set; }
+        public decimal ValorIcmsMonofasicoRetidoAnteriormente { get; private set; }
+
+        public Cst61(OrigemMercadoria origemMercadoria = OrigemMercadoria.Nacional, TipoDesconto tipoDesconto = TipoDesconto.Incondicional) : base(origemMercadoria, tipoDesconto)
+        {
+            Cst = Cst.Cst61;
+        }
+
+        public override void Calcula(ITributavel tributavel)
+        {
+            FacadeCalculadoraTributacao facadeCalculadoraTributacao = new FacadeCalculadoraTributacao(tributavel, TipoDesconto);
+            IResultadoCalculoIcmsMonofasico resultadoCalculoIcms = facadeCalculadoraTributacao.CalculaIcmsMonofasico();
+            ValorIcmsMonofasicoRetidoAnteriormente = resultadoCalculoIcms.ValorIcmsMonofasicoRetidoAnteriormente;
+            QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente = resultadoCalculoIcms.QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente;
+        }
+
     }
 }

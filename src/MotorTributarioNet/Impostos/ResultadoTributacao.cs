@@ -112,6 +112,8 @@ namespace MotorTributarioNet.Impostos
         public decimal ValorIcmsMonofasicoRetencao { get; private set; }
         public decimal ValorIcmsMonofasicoOperacao { get; private set; }
         public decimal ValorIcmsMonofasicoDiferido { get; private set; }
+        public decimal QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente { get; private set; }
+        public decimal ValorIcmsMonofasicoRetidoAnteriormente { get; private set; }
 
         #endregion
 
@@ -211,7 +213,7 @@ namespace MotorTributarioNet.Impostos
                         ValorIcmsDesonerado = ((Cst40)Icms).ValorIcmsDesonerado;
                         break;
                     case Cst.Cst41:
-                        //40 Não Tributada - Classificam-se neste código as operações não tributadas no ICMS pelo Regime Normal.
+                        //41 Não Tributada - Classificam-se neste código as operações não tributadas no ICMS pelo Regime Normal.
                         //Não existe Cálculo ICMS
                         break;
                     case Cst.Cst50:
@@ -243,6 +245,12 @@ namespace MotorTributarioNet.Impostos
                         Icms.Calcula(_produto);
                         PercentualBcStRetido = ((Cst60)Icms).PercentualBcStRetido;
                         ValorBcStRetido = ((Cst60)Icms).ValorBcStRetido;
+                        break;
+                    case Cst.Cst61:
+                        Icms = new Cst61();
+                        Icms.Calcula(_produto);
+                        ValorIcmsMonofasicoRetidoAnteriormente = ((Cst61)Icms).ValorIcmsMonofasicoRetidoAnteriormente;
+                        QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente = ((Cst61)Icms).QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente;
                         break;
                     case Cst.Cst70:
                         Icms = new Cst70(tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado);

@@ -33,6 +33,8 @@ namespace MotorTributarioNet.Impostos.Tributacoes
         private decimal ValorIcmsMonofasicoRetencao;
         private decimal ValorIcmsMonofasicoOperacao;
         private decimal ValorIcmsMonofasicoDiferido;
+        private decimal QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente;
+        private decimal ValorIcmsMonofasicoRetidoAnteriormente;
 
         public TributacaoIcmsMonofasico(ITributavel tributavel,TipoDesconto tipoDesconto)
         {
@@ -61,7 +63,7 @@ namespace MotorTributarioNet.Impostos.Tributacoes
         {
             QuantidadeBaseCalculoIcmsMonofasico = _tributavel.QuantidadeBaseCalculoIcmsMonofasico;
             ValorIcmsMonofasico = QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms;
-            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido, QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente, ValorIcmsMonofasicoRetidoAnteriormente);
         }
         private IResultadoCalculoIcmsMonofasico CalculaIcmsMonofasicoCst15()
         {
@@ -72,7 +74,7 @@ namespace MotorTributarioNet.Impostos.Tributacoes
             QuantidadeBaseCalculoIcmsMonofasicoRetencao = _tributavel.QuantidadeBaseCalculoIcmsMonofasico * (_tributavel.PercentualBiodisel / 100);
             ValorIcmsMonofasicoRetencao = (QuantidadeBaseCalculoIcmsMonofasicoRetencao * _tributavel.AliquotaAdRemIcms) * (_tributavel.PercentualOriginarioUf / 100);
 
-            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido, QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente, ValorIcmsMonofasicoRetidoAnteriormente);
         }
         private IResultadoCalculoIcmsMonofasico CalculaIcmsMonofasicoCst53()
         {
@@ -80,13 +82,14 @@ namespace MotorTributarioNet.Impostos.Tributacoes
             ValorIcmsMonofasico = (QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms) - (QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms * (_tributavel.PercentualOriginarioUf / 100));
             ValorIcmsMonofasicoOperacao = QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms;
             ValorIcmsMonofasicoDiferido = QuantidadeBaseCalculoIcmsMonofasico * _tributavel.AliquotaAdRemIcms * (_tributavel.PercentualOriginarioUf / 100);
-            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido, QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente, ValorIcmsMonofasicoRetidoAnteriormente);
         }
         private IResultadoCalculoIcmsMonofasico CalculaIcmsMonofasicoCst61()
         {
-            
+            QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente = _tributavel.QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente;
+            ValorIcmsMonofasicoRetidoAnteriormente = QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente * _tributavel.AliquotaAdRemIcmsRetidoAnteriormente;
 
-            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido);
+            return new ResultadoCalculoIcmsMonofasico(QuantidadeBaseCalculoIcmsMonofasico, ValorIcmsMonofasico, QuantidadeBaseCalculoIcmsMonofasicoRetencao, ValorIcmsMonofasicoRetencao, ValorIcmsMonofasicoOperacao, ValorIcmsMonofasicoDiferido, QuantidadeBaseCalculoIcmsMonofasicoRetidoAnteriormente, ValorIcmsMonofasicoRetidoAnteriormente);
         }
     }
 }
