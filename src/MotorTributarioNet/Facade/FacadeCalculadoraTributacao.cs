@@ -100,5 +100,10 @@ namespace MotorTributarioNet.Facade
         {
             return new TributacaoIcmsMonofasico(_tributavel, _tipoDesconto).Calcula();
         }
+
+        public IResultadoCalculoIcmsEfetivo CalculaIcmsEfetivo()
+        {
+            return new TributacaoIcmsEfetivo(_tributavel, _tipoDesconto).Calcula();
+        }
     }
 }
