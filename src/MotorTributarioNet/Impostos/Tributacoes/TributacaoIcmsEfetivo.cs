@@ -52,8 +52,12 @@ namespace MotorTributarioNet.Impostos.Tributacoes
 
         private decimal CalculaIcms(decimal baseCalculo)
         {
-            decimal percentualCalculoIcmsEfetivo = _tributavel.PercentualIcmsEfetivo + _tributavel.PercentualFcpStRetido;
-            return baseCalculo * percentualCalculoIcmsEfetivo / 100;
+            if(_tributavel.PercentualIcmsEfetivo > 0m)
+            {
+                decimal percentualCalculoIcmsEfetivo = _tributavel.PercentualIcmsEfetivo + _tributavel.PercentualFcpStRetido;
+                return baseCalculo * percentualCalculoIcmsEfetivo / 100;
+            }
+            return 0m;
         }
     }
 }

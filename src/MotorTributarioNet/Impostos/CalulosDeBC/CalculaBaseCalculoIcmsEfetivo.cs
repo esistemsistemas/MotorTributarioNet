@@ -36,7 +36,7 @@ namespace MotorTributarioNet.Impostos.CalulosDeBC
 
         public decimal CalculaBaseCalculo()
         {
-            var baseCalculo = CalculaBaseDeCalculo() + _tributavel.ValorIpi;
+            var baseCalculo = _tributavel.PercentualIcmsEfetivo > 0m ? CalculaBaseDeCalculo() + _tributavel.ValorIpi : 0m;
 
             return _tipoDesconto == TipoDesconto.Condincional ? CalculaIcmsComDescontoCondicional(baseCalculo) : CalculaIcmsComDescontoIncondicional(baseCalculo);
         }
