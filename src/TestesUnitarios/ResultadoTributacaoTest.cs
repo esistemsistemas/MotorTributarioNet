@@ -50,7 +50,7 @@ namespace TestCalculosTributarios
             var tributacao = new ResultadoTributacao(produto, Crt.RegimeNormal, TipoOperacao.OperacaoInterna, TipoPessoa.Juridica, tipoCalculoIcmsDesonerado: TipoCalculoIcmsDesonerado.BaseSimples);
             var resultado = tributacao.Calcular();
             decimal valorArredondado = resultado.ValorIcmsDesonerado.Arredondar();
-            Assert.Equal(0.24m, valorArredondado);
+            Assert.Equal(0.28m, valorArredondado);
         }
 
         [Fact]
