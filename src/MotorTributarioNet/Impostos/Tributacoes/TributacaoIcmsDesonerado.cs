@@ -60,7 +60,7 @@ namespace MotorTributarioNet.Impostos.Tributacoes
 
             if (tipoCalculoIcmsDesonerado == TipoCalculoIcmsDesonerado.BaseSimples)
             {
-                return valorBase * aliquota;
+                return (valorBase / (1 - aliquota)) * aliquota; 
             }
             else if (tipoCalculoIcmsDesonerado == TipoCalculoIcmsDesonerado.BasePorDentro)
             {
@@ -70,10 +70,14 @@ namespace MotorTributarioNet.Impostos.Tributacoes
                 }
                 else if (_tributavel.Cst == Cst.Cst30 || _tributavel.Cst == Cst.Cst40) //base por dentro 30 ou 40: ICMS Desonerado = (Preço na Nota Fiscal / (1 - Alíquota)) * Alíquota
                 {
-                    return (valorBase / (1 - aliquota)) * aliquota;
+                    return valorBase * aliquota;
                 }
             }
             return 0m;
+            //Links consulta:
+            //https://nfe.io/blog/financeiro/desoneracao-de-icms/
+            //https://webmaissistemas.com.br/blog/icms-desonerado/
+            //https://focusnfe.com.br/blog/icms-desonarado/
         }
     }
 }
